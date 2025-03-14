@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Feedback Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
+        input, textarea { width: 100%; margin: 10px 0; padding: 8px; }
+        button { padding: 10px 15px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div id="login" class="container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="authenticate()">Login</button>
+    </div>
+
+    <div id="dashboard" class="container" style="display: none;">
+        <h2>Feedback Form</h2>
+        <textarea id="feedback" placeholder="Enter your feedback here..." required></textarea>
+        <button onclick="submitFeedback()">Submit</button>
+    </div>
+
+    <script>
+        const users = { "client1": "password123", "client2": "securepass" }; // Simple authentication
+        const adminEmail = "sshclhung@hotmail.com"; // Set your email address here
+
+        function sendEmail(subject, body) {
+            let mailtoLink = `mailto:${adminEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            let emailWindow = window.open(mailtoLink, '_blank');
+            if (emailWindow) {
+                emailWindow.close();
+            }
+        }
+
+        function authenticate() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            
+            if (users[username] && users[username] === password) {
+                document.getElementById("login").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+                sendEmail("Login Record", `User ${username} logged in at ${new Date().toLocaleString()}`);
+            } else {
+                alert("Invalid login credentials!");
+            }
+        }
+
+        function submitFeedback() {
+            let feedback = document.getElementById("feedback").value;
+            if (feedback.trim() === "") {
+                alert("Please enter feedback before submitting.");
+                return;
+            }
+            alert("Feedback submitted successfully!");
+            document.getElementById("feedback").value = "";
+        }
+    </script>
+</body>
+</html>
